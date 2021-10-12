@@ -13,11 +13,17 @@ private const val TAG = "MainActivity"
 private const val KEY_INDEX = "index"
 
 class MainActivity : AppCompatActivity() {
-
+    //my vars
+    //private var currentPoint: Double = 0.0
+    //private var totalPoints: Double = 0.0
+    //private var qNum: Int = 1
+    //
     private lateinit var trueButton: Button
     private lateinit var falseButton: Button
     private lateinit var nextButton: Button
     private lateinit var questionTextView: TextView
+
+
 
     private val quizViewModel: QuizViewModel by lazy {
         ViewModelProvider(this).get(QuizViewModel::class.java)
@@ -35,10 +41,13 @@ class MainActivity : AppCompatActivity() {
 
         trueButton.setOnClickListener { view: View ->
             checkAnswer(true)
+            //currentPoint = 16.6
+            //trueButton.setEnabled(false)
         }
 
         falseButton.setOnClickListener { view: View ->
             checkAnswer(false)
+            //trueButton.setEnabled(false)
         }
 
         nextButton.setOnClickListener {

@@ -4,7 +4,8 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:gravity="center"
-              android:orientation="vertical">
+              android:orientation="vertical"
+              android:background="@drawable/playstore">
 
     <TextView
         android:id="@+id/question_text_view"
@@ -12,6 +13,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="24dp"
+        android:textColor="@color/Dblue"
+        android:textSize="20sp"
         tools:text="@string/question_australia"/>
 
     <LinearLayout
