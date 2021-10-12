@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity() {
         falseButton = findViewById(R.id.false_button)
         nextButton = findViewById(R.id.next_button)
         questionTextView = findViewById(R.id.question_text_view)
+        buttonEnabled(quizViewModel.buttonEnabled)
 
         trueButton.setOnClickListener { view: View ->
             checkAnswer(true)
@@ -43,7 +44,13 @@ class MainActivity : AppCompatActivity() {
 
         nextButton.setOnClickListener {
             quizViewModel.moveToNext()
+            quizViewModel.buttonEnabled = true
             updateQuestion()
+            if (quizViewModel.currentIndex == 0) {
+                val resultMessage = "Quiz Result = ${quizViewModel.questionAnswered} out of ${quizViewModel.questionBankSize}"
+                Toast.makeText(this, resultMessage, Toast.LENGTH_LONG).show()
+                quizViewModel.questionAnswered = 0
+            }
         }
 
         updateQuestion()
@@ -83,16 +90,24 @@ class MainActivity : AppCompatActivity() {
     private fun updateQuestion() {
         val questionTextResId = quizViewModel.currentQuestionText
         questionTextView.setText(questionTextResId)
+        buttonEnabled(quizViewModel.buttonEnabled)
     }
 
     private fun checkAnswer(userAnswer: Boolean) {
         val correctAnswer = quizViewModel.currentQuestionAnswer
         val messageResId = if (userAnswer == correctAnswer) {
+            quizViewModel.questionAnswered++
             R.string.correct_toast
         } else {
             R.string.incorrect_toast
         }
         Toast.makeText(this, messageResId, Toast.LENGTH_SHORT)
             .show()
+       buttonEnabled(false)
+    }
+    private fun buttonEnabled(boolean: Boolean) {
+        quizViewModel.buttonEnabled = boolean
+        trueButton.isEnabled = boolean
+        falseButton.isEnabled = boolean
     }
 }
