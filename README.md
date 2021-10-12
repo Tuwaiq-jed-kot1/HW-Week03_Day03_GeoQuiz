@@ -6,7 +6,7 @@ The assignment will add a further condition to the GeoQuiz Project that we appli
 ---
 - Make the background of the screen to be an image instead of the background white, use any image you like.
 
-## Part Two - Preventing Repeat Answers and Graded Quiz 
+## Part Two - Preventing Repeat Answers and Graded Quiz (Optional)
 ---
 - Once a user provides an answer for a particular question, disable the buttons for that question to prevent multiple answers being entered.
 - After the user provides answers for all of the quiz questions, display a `Toast` with a percentage score for the quiz.
