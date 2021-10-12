@@ -19,35 +19,16 @@ class MainActivity : AppCompatActivity() {
     private lateinit var nextButton: Button
     private lateinit var questionTextView: TextView
 
-    private  var scor:Int=0//point
-    private var numberQuestiond=1//size array
-    var totalScor:Int=0
+    private var scor: Double = 0.0//point
+    private var numberQuestiond = 1//size array
+    private var totalScor: Double = 0.0
 
 
     private val quizViewModel: QuizViewModel by lazy {
         ViewModelProvider(this).get(QuizViewModel::class.java)
     }
 
-    fun countSizeQuestion(){
-        if(quizViewModel.questionBank.size==numberQuestiond){
 
-            Toast.makeText(this, "${quizViewModel.currentIndex}", Toast.LENGTH_SHORT).show()
-
-            trueButton.setEnabled(false);
-            falseButton.setEnabled(false)
-
-        }else{
-
-            //Toast.makeText(this, "${quizViewModel.currentIndex}", Toast.LENGTH_SHORT).show()
-
-            numberQuestiond++
-            quizViewModel.moveToNext()
-            updateQuestion()
-
-
-        }
-
-    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d(TAG, "onCreate(Bundle?) called");
@@ -111,10 +92,29 @@ class MainActivity : AppCompatActivity() {
         questionTextView.setText(questionTextResId)
     }
 
+    fun countSizeQuestion() {
+        if (quizViewModel.questionBank.size == numberQuestiond) {
+
+            trueButton.setEnabled(false);
+            falseButton.setEnabled(false)
+
+        } else {
+
+            numberQuestiond++
+            quizViewModel.moveToNext()
+            updateQuestion()
+
+
+        }
+
+    }
+
+
 
     private fun checkAnswer(userAnswer: Boolean) {
         val correctAnswer = quizViewModel.currentQuestionAnswer
         val messageResId = if (userAnswer == correctAnswer) {
+            scor++
             R.string.correct_toast
         } else {
             R.string.incorrect_toast
@@ -123,24 +123,16 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, messageResId, Toast.LENGTH_SHORT)
             .show()
 
-        if (correctAnswer==userAnswer){
+        if (quizViewModel.questionBank.size == numberQuestiond) {
 
-            scor+=20
-            Toast.makeText(this, " //// $scor", Toast.LENGTH_SHORT)
-                .show()
+            totalScor = 100 * (scor / quizViewModel.questionBank.size)
 
-        }else{
-            scor=scor
+            Toast.makeText(
+                this,
+                "Total your scor is %${"%.2f".format(totalScor)} ",
+                Toast.LENGTH_LONG
+            ).show()
         }
-
-        if (quizViewModel.questionBank.size==numberQuestiond){
-
-             totalScor=(quizViewModel.questionBank.size/scor)*100
-
-            Toast.makeText(this, "Total your scor is$totalScor ", Toast.LENGTH_LONG)
-                .show()
-        }
-
 
 
     }
