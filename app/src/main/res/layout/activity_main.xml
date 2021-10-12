@@ -4,6 +4,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:gravity="center"
+    android:background="@mipmap/_back_ground_foreground"
               android:orientation="vertical">
 
     <TextView
@@ -38,6 +39,7 @@
         android:layout_height="wrap_content"
         android:text="@string/next_button"
         android:drawableEnd="@drawable/arrow_right"
+        android:enabled="false"
         android:drawablePadding="4dp"/>
 
 </LinearLayout>

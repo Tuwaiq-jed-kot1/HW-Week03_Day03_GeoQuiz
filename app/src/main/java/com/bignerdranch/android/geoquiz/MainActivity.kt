@@ -19,10 +19,35 @@ class MainActivity : AppCompatActivity() {
     private lateinit var nextButton: Button
     private lateinit var questionTextView: TextView
 
+    private  var scor:Int=0//point
+    private var numberQuestiond=1//size array
+    var totalScor:Int=0
+
+
     private val quizViewModel: QuizViewModel by lazy {
         ViewModelProvider(this).get(QuizViewModel::class.java)
     }
 
+    fun countSizeQuestion(){
+        if(quizViewModel.questionBank.size==numberQuestiond){
+
+            Toast.makeText(this, "${quizViewModel.currentIndex}", Toast.LENGTH_SHORT).show()
+
+            trueButton.setEnabled(false);
+            falseButton.setEnabled(false)
+
+        }else{
+
+            //Toast.makeText(this, "${quizViewModel.currentIndex}", Toast.LENGTH_SHORT).show()
+
+            numberQuestiond++
+            quizViewModel.moveToNext()
+            updateQuestion()
+
+
+        }
+
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d(TAG, "onCreate(Bundle?) called");
@@ -34,17 +59,18 @@ class MainActivity : AppCompatActivity() {
         questionTextView = findViewById(R.id.question_text_view)
 
         trueButton.setOnClickListener { view: View ->
+
             checkAnswer(true)
+            countSizeQuestion()
         }
 
         falseButton.setOnClickListener { view: View ->
+
             checkAnswer(false)
+
+            countSizeQuestion()
         }
 
-        nextButton.setOnClickListener {
-            quizViewModel.moveToNext()
-            updateQuestion()
-        }
 
         updateQuestion()
     }
@@ -85,6 +111,7 @@ class MainActivity : AppCompatActivity() {
         questionTextView.setText(questionTextResId)
     }
 
+
     private fun checkAnswer(userAnswer: Boolean) {
         val correctAnswer = quizViewModel.currentQuestionAnswer
         val messageResId = if (userAnswer == correctAnswer) {
@@ -92,7 +119,29 @@ class MainActivity : AppCompatActivity() {
         } else {
             R.string.incorrect_toast
         }
+
         Toast.makeText(this, messageResId, Toast.LENGTH_SHORT)
             .show()
+
+        if (correctAnswer==userAnswer){
+
+            scor+=20
+            Toast.makeText(this, " //// $scor", Toast.LENGTH_SHORT)
+                .show()
+
+        }else{
+            scor=scor
+        }
+
+        if (quizViewModel.questionBank.size==numberQuestiond){
+
+             totalScor=(quizViewModel.questionBank.size/scor)*100
+
+            Toast.makeText(this, "Total your scor is$totalScor ", Toast.LENGTH_LONG)
+                .show()
+        }
+
+
+
     }
 }
