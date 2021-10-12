@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var falseButton: Button
     private lateinit var nextButton: Button
     private lateinit var questionTextView: TextView
+    private var score = 0.0
 
     private val quizViewModel: QuizViewModel by lazy {
         ViewModelProvider(this).get(QuizViewModel::class.java)
@@ -82,17 +83,31 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateQuestion() {
         val questionTextResId = quizViewModel.currentQuestionText
+        if (quizViewModel.currentIndex == quizViewModel.finalQuizModel) {
+            questionTextView.text = overallScore(score)
+            Toast.makeText(this, overallScore(score), Toast.LENGTH_LONG).show()
+            trueButton.isEnabled = false
+            falseButton.isEnabled = false
+            nextButton.isEnabled = false
+            return
+        }
         questionTextView.setText(questionTextResId)
     }
+
 
     private fun checkAnswer(userAnswer: Boolean) {
         val correctAnswer = quizViewModel.currentQuestionAnswer
         val messageResId = if (userAnswer == correctAnswer) {
+            score++
             R.string.correct_toast
         } else {
             R.string.incorrect_toast
         }
         Toast.makeText(this, messageResId, Toast.LENGTH_SHORT)
             .show()
+    }
+    private fun overallScore(grade: Double): String {
+        var result: Double = (grade / 6) * 100
+        return "Your overall calculated grade = $result%"
     }
 }

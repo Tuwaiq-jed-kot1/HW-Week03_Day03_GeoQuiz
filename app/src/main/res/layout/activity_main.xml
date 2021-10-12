@@ -4,6 +4,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:gravity="center"
+              android:background="@drawable/constellation"
               android:orientation="vertical">
 
     <TextView
@@ -12,7 +13,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="24dp"
-        tools:text="@string/question_australia"/>
+        android:textColor="#FFFFFF"
+        tools:text="@string/question_australia" />
 
     <LinearLayout
         android:layout_width="wrap_content"
