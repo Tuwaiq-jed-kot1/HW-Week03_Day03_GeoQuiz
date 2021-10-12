@@ -4,7 +4,9 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:gravity="center"
-              android:orientation="vertical">
+              android:orientation="vertical"
+    android:background="@drawable/rr">
+
 
     <TextView
         android:id="@+id/question_text_view"
