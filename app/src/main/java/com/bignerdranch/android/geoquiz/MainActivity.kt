@@ -18,11 +18,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var falseButton: Button
     private lateinit var nextButton: Button
     private lateinit var questionTextView: TextView
-
     private val quizViewModel: QuizViewModel by lazy {
         ViewModelProvider(this).get(QuizViewModel::class.java)
     }
-
+   private var points=0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d(TAG, "onCreate(Bundle?) called");
@@ -32,7 +31,6 @@ class MainActivity : AppCompatActivity() {
         falseButton = findViewById(R.id.false_button)
         nextButton = findViewById(R.id.next_button)
         questionTextView = findViewById(R.id.question_text_view)
-
         trueButton.setOnClickListener { view: View ->
             checkAnswer(true)
         }
@@ -43,6 +41,12 @@ class MainActivity : AppCompatActivity() {
 
         nextButton.setOnClickListener {
             quizViewModel.moveToNext()
+            if(quizViewModel.currentIndex ==0){
+                nextButton.text=" quiz ended"
+                nextButton.isEnabled=false
+                Toast.makeText(this,"$points out of ${quizViewModel.questionCount}", Toast.LENGTH_LONG )
+                    .show()
+            }else
             updateQuestion()
         }
 
@@ -81,6 +85,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateQuestion() {
+        falseButton.isEnabled=true
+        trueButton.isEnabled=true
         val questionTextResId = quizViewModel.currentQuestionText
         questionTextView.setText(questionTextResId)
     }
@@ -88,8 +94,13 @@ class MainActivity : AppCompatActivity() {
     private fun checkAnswer(userAnswer: Boolean) {
         val correctAnswer = quizViewModel.currentQuestionAnswer
         val messageResId = if (userAnswer == correctAnswer) {
+            points+=1
+            falseButton.isEnabled=false
+            trueButton.isEnabled=false
             R.string.correct_toast
         } else {
+            falseButton.isEnabled=false
+            trueButton.isEnabled=false
             R.string.incorrect_toast
         }
         Toast.makeText(this, messageResId, Toast.LENGTH_SHORT)
