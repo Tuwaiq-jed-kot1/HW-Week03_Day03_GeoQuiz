@@ -19,6 +19,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var nextButton: Button
     private lateinit var questionTextView: TextView
 
+
+
     private val quizViewModel: QuizViewModel by lazy {
         ViewModelProvider(this).get(QuizViewModel::class.java)
     }
@@ -94,5 +96,8 @@ class MainActivity : AppCompatActivity() {
         }
         Toast.makeText(this, messageResId, Toast.LENGTH_SHORT)
             .show()
+
     }
+
+
 }

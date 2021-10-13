@@ -4,7 +4,8 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:gravity="center"
-              android:orientation="vertical">
+              android:orientation="vertical"
+              android:background="@drawable/f7f07caf9477dd4d343242c4fe8756f5">
 
     <TextView
         android:id="@+id/question_text_view"
@@ -12,7 +13,11 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="24dp"
-        tools:text="@string/question_australia"/>
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="#242730"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        tools:text="@string/question_australia" />
 
     <LinearLayout
         android:layout_width="wrap_content"
