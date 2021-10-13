@@ -17,10 +17,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var trueButton: Button
     private lateinit var falseButton: Button
     private lateinit var nextButton: Button
-    private lateinit var restartButton: Button
 
     private lateinit var questionTextView: TextView
-    private var score = 0.0
     private val msg = "Congratulations, you finished the Quiz!!\nYour score for the test is"
 
     private val quizViewModel: QuizViewModel by lazy {
@@ -35,7 +33,6 @@ class MainActivity : AppCompatActivity() {
         trueButton = findViewById(R.id.true_button)
         falseButton = findViewById(R.id.false_button)
         nextButton = findViewById(R.id.next_button)
-        restartButton = findViewById(R.id.restart_button)
         questionTextView = findViewById(R.id.question_text_view)
         trueButton.setOnClickListener { view: View ->
             checkAnswer(true)
@@ -48,18 +45,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         nextButton.setOnClickListener {
+
             quizViewModel.moveToNext()
             updateQuestion()
             visibleButton()
-
-
-        }
-        restartButton.setOnClickListener {
-            restartButton.visibility = View.GONE
-            nextButton.visibility = View.VISIBLE
-            score = 0.0
+            nextButton.setText( R.string.next_button)
 
         }
+
         updateQuestion()
 
     }
@@ -105,7 +98,7 @@ class MainActivity : AppCompatActivity() {
         var messageResId = 0
         val correctAnswer = quizViewModel.currentQuestionAnswer
         if (userAnswer == correctAnswer) {
-            score++
+            quizViewModel.score++
             messageResId = R.string.correct_toast
         } else {
             messageResId = R.string.incorrect_toast
@@ -116,15 +109,18 @@ class MainActivity : AppCompatActivity() {
         //check the end of the quiz &  display the score
 
         if (quizViewModel.currentIndex == quizViewModel.getQuestionBankSize() - 1) {
-            Toast.makeText(
-                this,
-                "$msg ${"%.2f".format(score / quizViewModel.getQuestionBankSize() * 100.0)}",
-                Toast.LENGTH_LONG
-            ).show()
 
             nextButton.visibility = View.GONE
-            restartButton.visibility = View.VISIBLE
+            questionTextView.setText("")
+            Toast.makeText(
+                this,
+                "$msg ${"%.2f".format(quizViewModel.score / quizViewModel.getQuestionBankSize() * 100.0)}",
+                Toast.LENGTH_LONG
+            ).show()
+            quizViewModel.score = 0.0
 
+            nextButton.setText( R.string.restart_button)
+            nextButton.visibility = View.VISIBLE
         }
     }
 
