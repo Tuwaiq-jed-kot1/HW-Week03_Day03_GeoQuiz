@@ -15,6 +15,7 @@ private const val KEY_INDEX = "index"
 
 class MainActivity : AppCompatActivity() {
 
+
     private lateinit var trueButton: Button
     private lateinit var falseButton: Button
     private lateinit var nextButton: Button

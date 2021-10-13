@@ -37,8 +37,8 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="$USER_HOME$/Downloads/Android_Studio_Trademark.svg.png" />
-                                                <entry key="opacityPercent" value="80" />
+                                                <entry key="imagePath" value="$USER_HOME$/Downloads/Photos/IMG_4600.JPG" />
+                                                <entry key="opacityPercent" value="60" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -71,8 +71,7 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="$USER_HOME$/Downloads/Android_Studio_Trademark.svg.png" />
-                                      <entry key="theme" value="CUSTOM" />
+                                      <entry key="imageAsset" value="$USER_HOME$/Downloads/Photos/IMG_4600.JPG" />
                                     </map>
                                   </option>
                                 </PersistentState>
