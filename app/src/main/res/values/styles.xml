@@ -3,9 +3,11 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">#F6EBD6</item>
+        <item name="colorPrimaryDark">#938C7F</item>
+        <item name="colorAccent">#3A3A38</item>
     </style>
-
+    <style name="AppTheme.BackgroundImageStyle">
+        <item name="android:windowBackground">@drawable/y_back_ground</item>
+    </style>
 </resources>

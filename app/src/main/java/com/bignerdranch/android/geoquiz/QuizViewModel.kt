@@ -27,4 +27,7 @@ class QuizViewModel : ViewModel() {
     fun moveToNext() {
         currentIndex = (currentIndex + 1) % questionBank.size
     }
+    fun getQuestionBankSize():Int{
+        return questionBank.size
+    }
 }
