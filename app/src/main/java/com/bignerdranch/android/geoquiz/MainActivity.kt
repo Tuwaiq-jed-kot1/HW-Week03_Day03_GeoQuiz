@@ -2,6 +2,7 @@ package com.bignerdranch.android.geoquiz
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -18,7 +19,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var falseButton: Button
     private lateinit var nextButton: Button
     private lateinit var questionTextView: TextView
-
+    private var correctAns: Double = 0.0
     private val quizViewModel: QuizViewModel by lazy {
         ViewModelProvider(this).get(QuizViewModel::class.java)
     }
@@ -35,18 +36,39 @@ class MainActivity : AppCompatActivity() {
 
         trueButton.setOnClickListener { view: View ->
             checkAnswer(true)
+            enabledBtn(false)
         }
 
         falseButton.setOnClickListener { view: View ->
             checkAnswer(false)
+            enabledBtn(false)
         }
 
         nextButton.setOnClickListener {
             quizViewModel.moveToNext()
             updateQuestion()
+            enabledBtn(true)
+
+            if (quizViewModel.currentIndex == 0) {
+                //  nextButton.isEnabled = false
+                    var toast:Toast = Toast.makeText(this, calculateScore(), Toast.LENGTH_SHORT)
+                toast.setGravity(Gravity.TOP,0,0)
+                toast.show()
+                correctAns = 0.0
+            }
         }
 
         updateQuestion()
+    }
+
+    fun calculateScore(): String {
+        val score: Double = (correctAns / quizViewModel.listSize) * 100.0
+        return "Your score is %.2f".format(score) + "%"
+    }
+
+    fun enabledBtn(state: Boolean) {
+        falseButton.isEnabled = state
+        trueButton.isEnabled = state
     }
 
     override fun onStart() {
@@ -87,10 +109,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkAnswer(userAnswer: Boolean) {
         val correctAnswer = quizViewModel.currentQuestionAnswer
-        val messageResId = if (userAnswer == correctAnswer) {
-            R.string.correct_toast
+        val messageResId: Int
+        if (userAnswer == correctAnswer) {
+            messageResId = R.string.correct_toast
+            correctAns++
         } else {
-            R.string.incorrect_toast
+            messageResId = R.string.incorrect_toast
         }
         Toast.makeText(this, messageResId, Toast.LENGTH_SHORT)
             .show()
