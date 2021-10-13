@@ -11,15 +11,15 @@ import androidx.lifecycle.ViewModelProvider
 
 private const val TAG = "MainActivity"
 private const val KEY_INDEX = "index"
-
 class MainActivity : AppCompatActivity() {
 
     private lateinit var trueButton: Button
     private lateinit var falseButton: Button
     private lateinit var nextButton: Button
     private lateinit var questionTextView: TextView
+    private var countCorrectAnswers: Int = 0
 
-    private val quizViewModel: QuizViewModel by lazy {
+    val quizViewModel: QuizViewModel by lazy {
         ViewModelProvider(this).get(QuizViewModel::class.java)
     }
 
@@ -35,6 +35,7 @@ class MainActivity : AppCompatActivity() {
 
         trueButton.setOnClickListener { view: View ->
             checkAnswer(true)
+            //trueButton.set
         }
 
         falseButton.setOnClickListener { view: View ->
@@ -88,11 +89,23 @@ class MainActivity : AppCompatActivity() {
     private fun checkAnswer(userAnswer: Boolean) {
         val correctAnswer = quizViewModel.currentQuestionAnswer
         val messageResId = if (userAnswer == correctAnswer) {
+            ++countCorrectAnswers
             R.string.correct_toast
         } else {
             R.string.incorrect_toast
         }
-        Toast.makeText(this, messageResId, Toast.LENGTH_SHORT)
-            .show()
-    }
+
+        Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Number of correct answers: ${countCorrectAnswers.toString()}", Toast.LENGTH_SHORT).show()
+        if (quizViewModel.questionBank.size-1 == quizViewModel.currentIndex) {
+            Toast.makeText(this, "Quiz result is: ${(100*(quizViewModel.questionBank.size/countCorrectAnswers)).toString()}", Toast.LENGTH_SHORT).show()
+        }
+        }
+
+
+    /*fun toastResult() {
+        Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show()
+    }*/
+
 }
+
